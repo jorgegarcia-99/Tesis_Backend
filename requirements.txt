@@ -1,0 +1,8 @@
+flask
+python-dotenv
+flask-cors
+pandas
+pymongo
+txmongo
+pymongo[srv]
+requests
