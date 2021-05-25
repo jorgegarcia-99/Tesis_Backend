@@ -14,7 +14,7 @@ def response_scrapy(spider_name,url):
         'start_requests': True
     }
  
-    response_post = requests.get('http://10.0.0.6 :9080/crawl.json', params)
+    response_post = requests.get('http://10.0.0.6:9080/crawl.json', params)
     data = json.loads(response_post.text)
 
     if spider_name == 'spider_post':
