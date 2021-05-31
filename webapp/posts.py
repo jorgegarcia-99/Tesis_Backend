@@ -14,7 +14,7 @@ def response_scrapy(spider_name,url):
         'start_requests': True
     }
  
-    response_post = requests.get('http://40.71.230.0:9080/crawl.json', params)
+    response_post = requests.get('https://tp2scrapyrt.azurewebsites.net/crawl.json', params)
     data = json.loads(response_post.text)
 
     if spider_name == 'spider_post':
