@@ -30,8 +30,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        mkdir venv/nltk_data
-        python -m nltk.downloader stopwords -d venv/nltk_data
 
     # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
@@ -56,7 +54,12 @@ jobs:
         with:
           name: python-app
           path: .
-
+      
+      - name: Download stopwords
+        run: |
+          mkdir venv/nltk_data
+          python -m nltk.downloader stopwords -d venv/nltk_data
+        
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         with:
