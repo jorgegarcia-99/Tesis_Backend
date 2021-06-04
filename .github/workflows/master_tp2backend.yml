@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        python -m nltk.downloader stopwords -d /root/nltk_data
+        python3 -m nltk.downloader stopwords -d ./antenv/nltk_data
 
     # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
