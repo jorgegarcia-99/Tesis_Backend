@@ -26,12 +26,11 @@ jobs:
       run: |
         python -m venv venv
         source venv/bin/activate
-        pip install -r requirements.txt
-        sudo mkdir ./venv/lib/nltk_data
-        sudo venv/bin/python -m nltk.downloader stopwords -d ./venv/lib/nltk_data
+        
 
-#     - name: Install dependencies
-#       run: |
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
         
         
     # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
