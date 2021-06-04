@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        mkdir /usr/lib/nltk_data
+        sudo mkdir /usr/lib/nltk_data
         python -m nltk.downloader stopwords -d /usr/lib/nltk_data
         
     # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
