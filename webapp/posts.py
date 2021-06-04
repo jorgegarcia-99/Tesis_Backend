@@ -58,6 +58,13 @@ def extract():
                     list_dict_comment = list(data_comment["items"])
                     dict_post.update({'comments': list_dict_comment})  
                 
+                if len(dict_post["comments"])==0:
+                    dict_post.update({'comments_positive': num_positivo})
+                    dict_post.update({'comments_negative': num_negativo})
+                    dict_post.update({'comments_neutral': num_neutro})
+                    dict_post.update({'comments': []})
+                    return dict_post
+
                 df_comments = pd.DataFrame(dict_post["comments"])
                 
                 df_comments["sentiment"] = df_comments["text"].transform(sentiment_analysis)
