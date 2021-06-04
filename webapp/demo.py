@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from . import db
-import requests
-import json
+from webapp.model import svm_model
+from webapp.preprocesamiento import preprocesamiento
 
 
 bp = Blueprint('demo', __name__, url_prefix='/demo')
@@ -10,8 +10,9 @@ bp = Blueprint('demo', __name__, url_prefix='/demo')
 def demo():
    
     request_body = request.get_json()
-    url = request_body['texto']
+    texto = request_body['texto']
     
     if request.method == 'POST':
-        response = requests.post('https://api-proyecto-nlp.herokuapp.com/predict', json = {"texto":url})
-        return response.json()
+        preprocesado = preprocesamiento(texto)
+        resultado = svm_model(preprocesado)
+        return jsonify({"texto":texto,"preprocesado":preprocesado,"resultado":resultado})

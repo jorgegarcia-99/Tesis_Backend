@@ -1,8 +1,10 @@
 from flask import Blueprint, request, jsonify, abort
 from . import db
+from webapp.model import svm_model
+from webapp.preprocesamiento import preprocesamiento
 import requests
 import json
-
+import pandas as pd
 
 bp = Blueprint('posts', __name__, url_prefix='/scrape')
 
@@ -25,6 +27,9 @@ def response_scrapy(spider_name,url):
                 abort(404)
 
     return data
+
+def sentiment_analysis(text):   
+    return svm_model(preprocesamiento(text))
         
 @bp.route('', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def extract():
@@ -52,18 +57,22 @@ def extract():
                     data_comment = response_scrapy('spider_comment', url)
                     list_dict_comment = list(data_comment["items"])
                     dict_post.update({'comments': list_dict_comment})  
+                
+                df_comments = pd.DataFrame(dict_post["comments"])
+                
+                df_comments["sentiment"] = df_comments["text"].transform(sentiment_analysis)
+                
+                frec = df_comments["sentiment"].value_counts()
 
-                for comment in dict_post["comments"]:
-                    response = requests.post('https://api-proyecto-nlp.herokuapp.com/predict', json = {"texto":comment["text"]})
-                    comment["sentiment"] = response.json()["resultado"]
-
-                    if response.json()["resultado"] == "Positivo": num_positivo += 1
-                    elif response.json()["resultado"] == "Negativo": num_negativo += 1
-                    elif response.json()["resultado"] == "Neutro": num_neutro += 1
+                if "Positivo" in list(frec.keys()): num_positivo = int(frec.loc[["Positivo"]][0])
+                if "Negativo" in list(frec.keys()): num_negativo = int(frec.loc[["Negativo"]][0])
+                if "Neutro" in list(frec.keys()): num_neutro = int(frec.loc[["Neutro"]][0])
 
                 dict_post.update({'comments_positive': num_positivo})
                 dict_post.update({'comments_negative': num_negativo})
                 dict_post.update({'comments_neutral': num_neutro})
+
+                dict_post.update({'comments': list(df_comments.T.to_dict().values())})
 
                 return dict_post
         
