@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from . import db
-from webapp.model import svm_model
+from webapp.model import model
 from webapp.preprocesamiento import preprocesamiento
 
 
@@ -14,5 +14,5 @@ def demo():
     
     if request.method == 'POST':
         preprocesado = preprocesamiento(texto)
-        resultado = svm_model(preprocesado)
+        resultado = model(preprocesado)
         return jsonify({"texto":texto,"preprocesado":preprocesado,"resultado":resultado})

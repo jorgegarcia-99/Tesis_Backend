@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, abort
 from . import db
-from webapp.model import svm_model
+from webapp.model import model
 from webapp.preprocesamiento import preprocesamiento
 import requests
 import json
@@ -29,7 +29,7 @@ def response_scrapy(spider_name,url):
     return data
 
 def sentiment_analysis(text):   
-    return svm_model(preprocesamiento(text))
+    return model(preprocesamiento(text))
         
 @bp.route('', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def extract():
