@@ -51,7 +51,7 @@ def extract():
                 result = db.consultar_post_por_id(dict_post["identifier"])
 
                 if result:
-                    dict_post.update({'comments': list(result)})              
+                    dict_post.update({'comments': list(result)})            
 
                 else:
                     data_comment = response_scrapy('spider_comment', url)

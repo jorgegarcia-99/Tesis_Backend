@@ -8,7 +8,7 @@ from werkzeug.local import LocalProxy
 def get_db():
     db = current_app.config['DB_URI']
     client = MongoClient(db)
-    return client.DBRedSocial
+    return client.DBTesis
 
 
 # Use LocalProxy to read the global db instance with just `db`
