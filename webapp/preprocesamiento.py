@@ -52,13 +52,12 @@ def preprocesamiento(X):
     # SE PUEDE MEJORAR El PREPROCESAMIENTO
 
     #Eliminar [] mal extraídos
-    list_word = []
-    for word in X.split():
-        if not (word[0] == '[' and word[len(word)-1] == "]"):
-            word = word.replace("[","").replace("]","")
-        list_word.append(word)
-    X= " ".join(list(list_word))
-    del(list_word)
+    texto_encontrado = re.findall(r"(([a-zA-ZÀ-ÿ\u00f1\u00d1\d-]+\[[a-zA-ZÀ-ÿ\u00f1\u00d1(\ )\d-]+\][a-zA-ZÀ-ÿ\u00f1\u00d1\d-]*)|(\[[a-zA-ZÀ-ÿ\u00f1\u00d1(\ )\d-]+\][a-zA-ZÀ-ÿ\u00f1\u00d1\d-]+))",X)
+
+    texto_encontrado = [sentence[0] for sentence in texto_encontrado]
+
+    for sentence in texto_encontrado:
+        X = X.replace(sentence,sentence.replace("[","").replace("]",""))
 
     #emojis
     for index2, row2 in emoji_dict_SEA.iterrows():
