@@ -44,5 +44,7 @@ threadpoolctl==2.1.0
 toml==0.10.2
 Unidecode==1.2.0
 w3lib==1.22.0
+azure-core==1.1.1
+azure-cosmos==4.1.0
 xlrd
 openpyxl

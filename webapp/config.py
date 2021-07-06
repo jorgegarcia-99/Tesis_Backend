@@ -1,10 +1,13 @@
 import os
 
 class Config(object):
-    DEBUG = True
+    DEBUG = False
     SECRET_KEY = 'dev'
-    DB_URI = os.environ['DATABASE_SERVER']
+    HOST = os.environ['ACCOUNT_HOST']
+    MASTER_KEY = os.environ['ACCOUNT_KEY']
+    DATABASE_ID = os.environ['COSMOS_DATABASE']
+
 
 
 class DevelopmentConfig(Config):
-    DEBUG = False
+    DEBUG = True

@@ -16,7 +16,7 @@ def response_scrapy(spider_name,url):
         'start_requests': True
     }
  
-    response_post = requests.get('https://tp2scrapyrt.azurewebsites.net/crawl.json', params)
+    response_post = requests.get('https://tp2-scrapyrt.azurewebsites.net/crawl.json', params)
     data = json.loads(response_post.text)
 
     if spider_name == 'spider_post':
@@ -48,8 +48,8 @@ def extract():
             num_neutro = 0
 
             if dict_post["identifier"]:
-                result = db.consultar_post_por_id(dict_post["identifier"])
-
+                result = db.consultar_comment_por_post(dict_post["identifier"])
+                  
                 if result:
                     dict_post.update({'comments': list(result)})            
 
@@ -65,9 +65,11 @@ def extract():
                     dict_post.update({'comments': []})
                     return dict_post
 
+                
                 df_comments = pd.DataFrame(dict_post["comments"])
                 
-                df_comments["sentiment"] = df_comments["text"].transform(sentiment_analysis)
+                if 'sentiment' not in df_comments.columns:
+                    df_comments["sentiment"] = df_comments["text"].transform(sentiment_analysis)
                 
                 frec = df_comments["sentiment"].value_counts()
 
