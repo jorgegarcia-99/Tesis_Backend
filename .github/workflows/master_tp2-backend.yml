@@ -60,6 +60,6 @@ jobs:
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'tp2backend'
+          app-name: 'tp2-backend'
           slot-name: 'production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B311B2ECA53240CC94F1BB84ACAAE90F }}
